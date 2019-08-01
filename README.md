@@ -1,3 +1,5 @@
-# Web
+# Presentation Creator / Web
 
-- Back End: ASP.NET Core
+## Technology
+
+- **Back End**: ASP.NET Core
