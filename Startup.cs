@@ -10,7 +10,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
 using PresentationCreatorWeb.Data;
+using PresentationCreatorWeb.Data.Repositories;
+using PresentationCreatorWeb.Helpers;
 
 namespace PresentationCreatorWeb
 {
@@ -30,6 +35,29 @@ namespace PresentationCreatorWeb
             services.AddEntityFrameworkNpgsql()
                .AddDbContext<ApplicationContext>()
                .BuildServiceProvider();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII
+                            .GetBytes(Configuration.GetSection("Security:TokenSecretKey").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +71,10 @@ namespace PresentationCreatorWeb
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("default");
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
