@@ -35,13 +35,19 @@ namespace PresentationCreatorWeb.Controllers
                 return BadRequest("چنین کاربری از قبل وجود دارد");
 
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
-
             var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
-
             var userToReturn = _mapper.Map<UserForDetailedDto>(createdUser);
 
             return CreatedAtRoute("GetUser", new {controller = "Users", id = createdUser.Id}, userToReturn);
         }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(UserForRegisterDto userForRegisterDto)
+        {
+           return Ok(new
+            {
+            });
+         }
 
         [HttpPost("login/method/email")]
         public async Task<IActionResult> LoginByEmail(UserForLoginDto userForLoginDto)
