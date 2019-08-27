@@ -42,7 +42,7 @@ namespace PresentationCreatorWeb.Controllers
         }
 
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword(UserForLoginDto userForLoginDto)
+        public async Task<IActionResult> ForgotPassword(UserForForgotPasswordDto userForForgotPasswordDto)
         {
            return Ok(new
             {
