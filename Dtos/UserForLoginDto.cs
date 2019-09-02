@@ -5,11 +5,11 @@ namespace PresentationCreatorWeb.Dtos
 {
     public class UserForLoginDto
     {
-        [Required(ErrorMessage="فیلد ایمیل اجباری است")]
-        [EmailAddress(ErrorMessage="فیلد ایمیل صحیح نیست")]
+        [Required(ErrorMessage="Email field is required.")]
+        [EmailAddress(ErrorMessage="Email field is not correct.")]
         public string Email { get; set; }
-        [Required(ErrorMessage="فیلد پسورد اجباری است")]
-        [StringLength(8, MinimumLength = 4, ErrorMessage = "پسورد شما باید بین 4 تا 8 کاراکتر داشته باشد")]
+        [Required(ErrorMessage="Password field is required.")]
+        [StringLength(8, MinimumLength = 4, ErrorMessage = "Password length must be between 4 and 8 characters long.")]
         public string Password { get; set; }
     }
 }
