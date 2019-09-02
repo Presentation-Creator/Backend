@@ -5,8 +5,8 @@ namespace PresentationCreatorWeb.Dtos
 {
     public class UserForForgotPasswordDto
     {
-        [Required(ErrorMessage="فیلد ایمیل اجباری است")]
-        [EmailAddress(ErrorMessage="فیلد ایمیل صحیح نیست")]
+        [Required(ErrorMessage="Email field is required.")]
+        [EmailAddress(ErrorMessage="Email field is not correct.")]
         public string Email { get; set; }
     }
 }
